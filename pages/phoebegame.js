@@ -1,170 +1,101 @@
-// import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from "react";
 
-// function App() {
-//     const [gameStarted, setGameStarted] = useState(false);
-//     const [score, setScore] = useState(0);
-//     const [noteSpeed, setNoteSpeed] = useState(2000); // Vitesse de la note
-//     const [notesFalling, setNotesFalling] = useState([]);
-//     const audioRef = useRef(new Audio('/smelly-cat.mp3'));
+export default function CentralPerkMemory() {
+    const commandsList = ["☕ Café", "🍵 Thé", "🥛 Latte", "🍫 Chocolat chaud", "🧋 Bubble Tea"];
+    const [commands, setCommands] = useState([]);
+    const [input, setInput] = useState([]);
+    const [showCommands, setShowCommands] = useState(true);
+    const [gameOver, setGameOver] = useState(false);
+    const [score, setScore] = useState(0);
+    const [difficulty, setDifficulty] = useState(3);
 
-//     const notes = ['A', 'S', 'D', 'F']; // Les touches à jouer
+    useEffect(() => {
+        startNewRound();
+    }, []);
 
-//     // Commencer le jeu
-//     const startGame = () => {
-//         setGameStarted(true);
-//         audioRef.current.play();
-//     };
+    const startNewRound = (reset = false) => {
+        setGameOver(false);
+        setShowCommands(true);
 
-//     // Générer des notes
-//     const generateNotes = () => {
-//         setInterval(() => {
-//             let newNote = {
-//                 key: notes[Math.floor(Math.random() * notes.length)],
-//                 left: `${Math.random() * 80}%`,
-//                 id: Date.now(),
-//             };
-//             setNotesFalling((prevNotes) => [...prevNotes, newNote]);
-//         }, noteSpeed);
-//     };
+        if (reset) {
+            setScore(0);
+            setDifficulty(3); // Réinitialise la difficulté à 3
 
-//     // Gérer l'appui sur une touche
-//     const handleKeyPress = (e) => {
-//         const pressedKey = e.key.toUpperCase();
-//         if (notes.includes(pressedKey)) {
-//             let noteToRemove = notesFalling.find(
-//                 (note) => note.key === pressedKey
-//             );
-//             if (noteToRemove) {
-//                 setScore(score + 1);
-//                 setNotesFalling((prevNotes) =>
-//                     prevNotes.filter((note) => note.id !== noteToRemove.id)
-//                 );
-//             }
-//         }
-//     };
+            // Attendre que difficulty soit bien mis à jour avant de générer les nouvelles commandes
+            setTimeout(() => {
+                const newCommands = Array.from({ length: 3 }, () => commandsList[Math.floor(Math.random() * commandsList.length)]);
+                setCommands(newCommands);
+                setInput([]);
+                setTimeout(() => setShowCommands(false), 2000);
+            }, 0);
+        } else {
+            const newCommands = Array.from({ length: difficulty }, () => commandsList[Math.floor(Math.random() * commandsList.length)]);
+            setCommands(newCommands);
+            setInput([]);
+            setTimeout(() => setShowCommands(false), 2000);
+        }
+    };
 
-//     // Lancer la génération des notes au démarrage du jeu
-//     useEffect(() => {
-//         if (gameStarted) {
-//             generateNotes();
-//             document.addEventListener('keydown', handleKeyPress);
-//         }
-//         return () => {
-//             document.removeEventListener('keydown', handleKeyPress);
-//         };
-//     }, [gameStarted, notesFalling, score]);
 
-//     // Animation des notes qui tombent
-//     const fallingNotes = notesFalling.map((note) => (
-//         <div
-//             key={note.id}
-//             className="note"
-//             style={{
-//                 left: note.left,
-//                 animation: 'fall 2s linear infinite',
-//             }}
-//         >
-//             {note.key}
-//         </div>
-//     ));
 
-//     return (
-//         <div className="App">
-//             {!gameStarted ? (
-//                 <div className="start-screen">
-//                     <h1>Smelly Cat Guitar Hero</h1>
-//                     <button onClick={startGame}>Start Game</button>
-//                 </div>
-//             ) : (
-//                 <div className="game-screen">
-//                     <div className="notes-container">{fallingNotes}</div>
-//                     <div className="score">
-//                         <h2>Score: {score}</h2>
-//                     </div>
-//                 </div>
-//             )}
 
-//             <style>{`
-//                 body {
-//                     margin: 0;
-//                     padding: 0;
-//                     font-family: Arial, sans-serif;
-//                     background-color: #ffeb3b;
-//                     display: flex;
-//                     justify-content: center;
-//                     align-items: center;
-//                     height: 100vh;
-//                 }
+    const handleSubmit = () => {
+        if (JSON.stringify(input) === JSON.stringify(commands)) {
+            setScore(score + 1);
+            setDifficulty(Math.min(difficulty + 1, 7)); // Augmente la difficulté jusqu'à 7
+            startNewRound();
+        } else {
+            setGameOver(true);
+        }
+    };
 
-//                 .App {
-//                     text-align: center;
-//                 }
+    const handleSelect = (cmd) => {
+        setInput([...input, cmd]);
+    };
 
-//                 .start-screen h1 {
-//                     font-size: 2.5rem;
-//                     color: #ff4081;
-//                 }
+    return (
+        <div style={{ textAlign: "center", padding: "20px", backgroundColor: "#8B0000", minHeight: "100vh", color: "white", fontFamily: "Arial, sans-serif" }}>
+            <h1 style={{ fontSize: "2em", fontWeight: "bold", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>Central Perk Memory ☕</h1>
+            <h2 style={{ marginBottom: "20px" }}>Score: {score}</h2>
 
-//                 button {
-//                     padding: 10px 20px;
-//                     background-color: #ff4081;
-//                     color: white;
-//                     border: none;
-//                     font-size: 1rem;
-//                     cursor: pointer;
-//                     border-radius: 5px;
-//                     margin-top: 20px;
-//                 }
+            {showCommands ? (
+                <div style={{ animation: "flash 1s alternate infinite", fontSize: "1.5em", background: "rgba(255,255,255,0.2)", padding: "15px", borderRadius: "10px" }}>
+                    <h3>Retiens cette commande :</h3>
+                    <p>{commands.join(" - ")}</p>
+                </div>
+            ) : (
+                <div>
+                    <h3>Entre les commandes dans le bon ordre :</h3>
+                    <div style={{ display: "flex", justifyContent: "center", gap: "10px", flexWrap: "wrap", marginTop: "10px" }}>
+                        {commandsList.map((cmd, index) => (
+                            <button key={index} onClick={() => handleSelect(cmd)} style={{ padding: "15px", fontSize: "18px", cursor: "pointer", borderRadius: "8px", backgroundColor: "#FFD700", border: "none", boxShadow: "2px 2px 5px rgba(0,0,0,0.3)", transition: "transform 0.2s", fontWeight: "bold" }}
+                                    onMouseOver={(e) => e.target.style.transform = "scale(1.1)"}
+                                    onMouseOut={(e) => e.target.style.transform = "scale(1)"}>
+                                {cmd}
+                            </button>
+                        ))}
+                    </div>
+                    <p style={{ marginTop: "15px", fontSize: "1.2em" }}>Votre entrée : {input.join(" - ")}</p>
+                    <button onClick={handleSubmit} style={{ padding: "12px", marginTop: "15px", backgroundColor: "#008000", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "1.2em", fontWeight: "bold", boxShadow: "2px 2px 5px rgba(0,0,0,0.3)", transition: "transform 0.2s" }}
+                            onMouseOver={(e) => e.target.style.transform = "scale(1.1)"}
+                            onMouseOut={(e) => e.target.style.transform = "scale(1)"}>
+                        Valider
+                    </button>
+                </div>
+            )}
 
-//                 button:hover {
-//                     background-color: #e6005c;
-//                 }
+            {gameOver && (
+                <div>
+                    <h3 style={{ color: "yellow", fontSize: "1.5em" }}><strong>"Rachel, this is not a career!"</strong></h3>
+                    <button onClick={() => startNewRound(true)} style={{ padding: "12px", backgroundColor: "#FF4500", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "1.2em", fontWeight: "bold", boxShadow: "2px 2px 5px rgba(0,0,0,0.3)", transition: "transform 0.2s" }}
+                            onMouseOver={(e) => e.target.style.transform = "scale(1.1)"}
+                            onMouseOut={(e) => e.target.style.transform = "scale(1)"}>
+                        Recommencer
+                    </button>
 
-//                 .game-screen {
-//                     position: relative;
-//                     width: 80%;
-//                     height: 60%;
-//                 }
 
-//                 .notes-container {
-//                     position: relative;
-//                     height: 100%;
-//                     overflow: hidden;
-//                 }
-
-//                 .note {
-//                     position: absolute;
-//                     width: 50px;
-//                     height: 50px;
-//                     background-color: #ff4081;
-//                     color: white;
-//                     font-size: 20px;
-//                     border-radius: 50%;
-//                     display: flex;
-//                     justify-content: center;
-//                     align-items: center;
-//                     animation: fall 2s linear infinite;
-//                 }
-
-//                 @keyframes fall {
-//                     0% {
-//                         top: -100px;
-//                     }
-//                     100% {
-//                         top: 100%;
-//                     }
-//                 }
-
-//                 .score {
-//                     position: absolute;
-//                     top: 10px;
-//                     right: 20px;
-//                     font-size: 1.5rem;
-//                     color: #ff4081;
-//                 }
-//             `}</style>
-//         </div>
-//     );
-// }
-
-// export default App;
+                </div>
+            )}
+        </div>
+    );
+}
