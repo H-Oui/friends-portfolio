@@ -1,0 +1,278 @@
+/* 🎨 Définition des couleurs Friends */
+:root {
+    --friends-red: rgb(233, 30, 35);
+    --friends-blue: rgb(2, 178, 231);
+    --friends-yellow: rgb(250, 188, 22);
+    --friends-beige: #faf3dd;
+    --friends-light-gray: #f5f5f5;
+    --friends-dark-gray: #333;
+    --friends-warning-red: #d62828;
+    --friends-shadow: rgba(0, 0, 0, 0.2);
+}
+
+/* 🌟 Reset */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* 🎭 Conteneur Principal */
+.character-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+    font-family: "Friends", sans-serif;
+}
+
+/* 🖼️ Contenu des personnages */
+.character-content {
+    display: flex;
+    width: 80%;
+    height: 80vh;
+    background: var(--friends-beige);
+    border-radius: 20px;
+    box-shadow: 0px 10px 30px var(--friends-shadow);
+}
+
+/* 📜 Cartes des personnages */
+.character-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+    padding: 20px;
+    box-shadow: 0px 4px 6px var(--friends-shadow);
+}
+
+/* 🌈 Couleurs Friends */
+.red { background-color: var(--friends-red); }
+.blue { background-color: var(--friends-blue); }
+.yellow { background-color: var(--friends-yellow); }
+
+/* 📸 Image des personnages */
+.character-image {
+    width: 80%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+/* 🧼 Animation de l'éponge */
+.sponge {
+    z-index: 100;
+    font-size: 2rem;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    transition: transform 0.2s;
+}
+
+.sponge:hover {
+    transform: scale(1.2);
+}
+
+/* 🧽 Effet de nettoyage */
+.stain {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    width: 40px;
+    height: 30px;
+    background: rgba(100, 50, 30, 0.7);
+    border-radius: 80% 10% 100% 40%;
+    animation: stainAnimation 3s forwards;
+}
+
+@keyframes stainAnimation {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0); }
+}
+
+/* 📝 Description */
+.character-description {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    background: var(--friends-light-gray);
+    color: var(--friends-dark-gray);
+}
+
+/* 🔥 Titre & Texte */
+.character-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.character-quote {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.character-text {
+    font-size: 1em;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* 🚨 Alerte Joey */
+.joey-warning {
+    position: absolute;
+    top: -40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--friends-warning-red);
+    background: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 3px 6px var(--friends-shadow);
+}
+
+@keyframes rageShake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes blush {
+    0% { filter: none; }
+    100% { filter: brightness(1.2) saturate(1.5) contrast(1.2); }
+}
+
+.angry {
+    animation: rageShake 0.3s ease-in-out infinite alternate, blush 1s forwards;
+}
+
+.angry-icon {
+    position: absolute;
+    top: -30px;
+    font-size: 2rem;
+    color: red;
+    opacity: 0;
+    animation: appearFade 0.8s forwards;
+}
+
+@keyframes appearFade {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 🛋️ Interaction avec le canapé */
+.couch {
+    font-size: 3rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.couch:hover {
+    transform: scale(1.1);
+}
+
+/* 🐥🐤 Animaux */
+.animals {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+}
+
+.chick, .duck {
+    font-size: 2rem;
+}
+
+/* 🎸 Smelly Cat */
+.guitar {
+    font-size: 2.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.smelly-cat {
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.smelly-cat:hover {
+    transform: scale(1.2);
+}
+
+.smelly-cat-text {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* 🛍️ Shopping Bag */
+.shopping-bag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 40px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    display: inline-block;
+}
+
+.shopping-bag:hover {
+    transform: scale(1.1);
+}
+
+.shopping-items {
+    position: absolute;
+    transform: translateX(-50%);
+    display: flex;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+}
+
+.item {
+    font-size: 30px;
+    position: absolute;
+    opacity: 0;
+    transition: all 0.5s ease-out;
+}
+
+/* 🛒 Texte Rachel */
+.rachel-text {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #d35400;
+    opacity: 1;
+    animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
