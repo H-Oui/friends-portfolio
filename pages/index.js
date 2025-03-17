@@ -33,7 +33,7 @@ const styles = {
         position: "relative"
     },
     text: {
-        color: "#ff0000",
+        color: "#fff",
         fontSize: "2rem",
         margin: "20px 0",
     },

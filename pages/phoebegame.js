@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-
-
  function PianoTilesGame() {
     const [tiles, setTiles] = useState([]);
     const [score, setScore] = useState(0);
