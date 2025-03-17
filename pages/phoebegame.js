@@ -1,101 +1,170 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-export default function CentralPerkMemory() {
-    const commandsList = ["☕ Café", "🍵 Thé", "🥛 Latte", "🍫 Chocolat chaud", "🧋 Bubble Tea"];
-    const [commands, setCommands] = useState([]);
-    const [input, setInput] = useState([]);
-    const [showCommands, setShowCommands] = useState(true);
-    const [gameOver, setGameOver] = useState(false);
+function PianoTilesGame() {
+    const [tiles, setTiles] = useState([]);
     const [score, setScore] = useState(0);
-    const [difficulty, setDifficulty] = useState(3);
+    const [gameOver, setGameOver] = useState(false);
+    const [soundPlayed, setSoundPlayed] = useState(false); // Gérer si le son a été joué
+    const tileSpeed = 3; // Vitesse de chute des notes
+
+    const keys = ["Q", "S", "D", "F", "G", "H", "J", "K"];
+    const audioRef = useRef(null); // Référence pour le son de Smelly Cat
+    const targetZoneY = 80; // Position de la zone où l'utilisateur doit cliquer
+
+    // Jouer le son uniquement après une interaction avec l'utilisateur
+    const playSound = () => {
+        if (audioRef.current && !soundPlayed) {
+            audioRef.current.play();
+            setSoundPlayed(true);
+        }
+    };
+
+    // Arrêter le son quand la note est ratée
+    const stopSound = () => {
+        if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0; // Réinitialise le son
+        }
+    };
 
     useEffect(() => {
-        startNewRound();
+        if (typeof window !== "undefined") {
+            audioRef.current = new Audio("/piano-cat.mp3");
+        }
     }, []);
 
-    const startNewRound = (reset = false) => {
-        setGameOver(false);
-        setShowCommands(true);
+    useEffect(() => {
+        if (!gameOver) {
+            const interval = setInterval(() => {
+                setTiles((prevTiles) => [
+                    ...prevTiles,
+                    { key: keys[Math.floor(Math.random() * keys.length)], y: 0, id: Date.now() },
+                ]);
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [gameOver]);
 
-        if (reset) {
-            setScore(0);
-            setDifficulty(3); // Réinitialise la difficulté à 3
+    useEffect(() => {
+        if (!gameOver) {
+            const moveInterval = setInterval(() => {
+                setTiles((prevTiles) => {
+                    const newTiles = prevTiles.map((tile) => ({ ...tile, y: tile.y + tileSpeed }));
+                    if (newTiles.some((tile) => tile.y > 90)) {
+                        setGameOver(true);
+                        stopSound(); // Arrêter le son quand une note échappe
+                    }
+                    return newTiles.filter((tile) => tile.y <= 100);
+                });
+            }, 100);
+            return () => clearInterval(moveInterval);
+        }
+    }, [gameOver]);
 
-            // Attendre que difficulty soit bien mis à jour avant de générer les nouvelles commandes
-            setTimeout(() => {
-                const newCommands = Array.from({ length: 3 }, () => commandsList[Math.floor(Math.random() * commandsList.length)]);
-                setCommands(newCommands);
-                setInput([]);
-                setTimeout(() => setShowCommands(false), 2000);
-            }, 0);
-        } else {
-            const newCommands = Array.from({ length: difficulty }, () => commandsList[Math.floor(Math.random() * commandsList.length)]);
-            setCommands(newCommands);
-            setInput([]);
-            setTimeout(() => setShowCommands(false), 2000);
+    const handleKeyPress = (e) => {
+        const key = e.key.toUpperCase();
+        if (keys.includes(key)) {
+            playSound(); // Joue le son quand une touche est pressée
+            const tileIndex = tiles.findIndex((tile) => tile.key === key && tile.y > 70 && tile.y < 90);
+            if (tileIndex !== -1) {
+                setScore((prev) => prev + 1);
+                const newTiles = [...tiles];
+                newTiles.splice(tileIndex, 1);
+                setTiles(newTiles);
+            }
         }
     };
 
-
-
-
-    const handleSubmit = () => {
-        if (JSON.stringify(input) === JSON.stringify(commands)) {
-            setScore(score + 1);
-            setDifficulty(Math.min(difficulty + 1, 7)); // Augmente la difficulté jusqu'à 7
-            startNewRound();
-        } else {
-            setGameOver(true);
-        }
-    };
-
-    const handleSelect = (cmd) => {
-        setInput([...input, cmd]);
-    };
+    useEffect(() => {
+        window.addEventListener("keydown", handleKeyPress);
+        return () => {
+            window.removeEventListener("keydown", handleKeyPress);
+        };
+    }, [tiles]);
 
     return (
-        <div style={{ textAlign: "center", padding: "20px", backgroundColor: "#8B0000", minHeight: "100vh", color: "white", fontFamily: "Arial, sans-serif" }}>
-            <h1 style={{ fontSize: "2em", fontWeight: "bold", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>Central Perk Memory ☕</h1>
-            <h2 style={{ marginBottom: "20px" }}>Score: {score}</h2>
+        <div className="game-container">
+            <h1>Piano Tiles - Smelly Cat Edition 🎵</h1>
+            <h2>Score: {score}</h2>
+            {gameOver && <h3>Game Over! Press F5 to restart.</h3>}
 
-            {showCommands ? (
-                <div style={{ animation: "flash 1s alternate infinite", fontSize: "1.5em", background: "rgba(255,255,255,0.2)", padding: "15px", borderRadius: "10px" }}>
-                    <h3>Retiens cette commande :</h3>
-                    <p>{commands.join(" - ")}</p>
-                </div>
-            ) : (
-                <div>
-                    <h3>Entre les commandes dans le bon ordre :</h3>
-                    <div style={{ display: "flex", justifyContent: "center", gap: "10px", flexWrap: "wrap", marginTop: "10px" }}>
-                        {commandsList.map((cmd, index) => (
-                            <button key={index} onClick={() => handleSelect(cmd)} style={{ padding: "15px", fontSize: "18px", cursor: "pointer", borderRadius: "8px", backgroundColor: "#FFD700", border: "none", boxShadow: "2px 2px 5px rgba(0,0,0,0.3)", transition: "transform 0.2s", fontWeight: "bold" }}
-                                    onMouseOver={(e) => e.target.style.transform = "scale(1.1)"}
-                                    onMouseOut={(e) => e.target.style.transform = "scale(1)"}>
-                                {cmd}
-                            </button>
-                        ))}
+            <div className="game-board">
+                {/* Zone de la cible à atteindre */}
+                <div className="target-zone" style={{ top: `${targetZoneY}%` }}></div>
+
+                {tiles.map((tile) => (
+                    <div
+                        key={tile.id}
+                        className="tile"
+                        style={{
+                            left: `${keys.indexOf(tile.key) * 12.5}%`,
+                            top: `${tile.y}%`,
+                        }}
+                    >
+                        {tile.key}
                     </div>
-                    <p style={{ marginTop: "15px", fontSize: "1.2em" }}>Votre entrée : {input.join(" - ")}</p>
-                    <button onClick={handleSubmit} style={{ padding: "12px", marginTop: "15px", backgroundColor: "#008000", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "1.2em", fontWeight: "bold", boxShadow: "2px 2px 5px rgba(0,0,0,0.3)", transition: "transform 0.2s" }}
-                            onMouseOver={(e) => e.target.style.transform = "scale(1.1)"}
-                            onMouseOut={(e) => e.target.style.transform = "scale(1)"}>
-                        Valider
-                    </button>
-                </div>
-            )}
+                ))}
+            </div>
+            <div className="key-row">
+                {keys.map((key) => (
+                    <div key={key} className="key">
+                        {key}
+                    </div>
+                ))}
+            </div>
 
-            {gameOver && (
-                <div>
-                    <h3 style={{ color: "yellow", fontSize: "1.5em" }}><strong>"Rachel, this is not a career!"</strong></h3>
-                    <button onClick={() => startNewRound(true)} style={{ padding: "12px", backgroundColor: "#FF4500", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "1.2em", fontWeight: "bold", boxShadow: "2px 2px 5px rgba(0,0,0,0.3)", transition: "transform 0.2s" }}
-                            onMouseOver={(e) => e.target.style.transform = "scale(1.1)"}
-                            onMouseOut={(e) => e.target.style.transform = "scale(1)"}>
-                        Recommencer
-                    </button>
-
-
-                </div>
-            )}
+            <style>{`
+        .game-container {
+          text-align: center;
+          font-family: Arial, sans-serif;
+        }
+        .game-board {
+          position: relative;
+          width: 100%;
+          height: 400px;
+          background: #222;
+          border: 2px solid white;
+          overflow: hidden;
+          margin: 20px auto;
+          display: flex;
+          justify-content: space-around;
+          align-items: flex-start;
+        }
+        .tile {
+          position: absolute;
+          width: 12.5%;
+          height: 50px;
+          background: pink;
+          text-align: center;
+          line-height: 50px;
+          font-weight: bold;
+          border-radius: 5px;
+        }
+        .key-row {
+          display: flex;
+          justify-content: space-around;
+          margin-top: 10px;
+        }
+        .key {
+          width: 12.5%;
+          height: 50px;
+          background: #444;
+          text-align: center;
+          line-height: 50px;
+          font-weight: bold;
+          color: white;
+          border-radius: 5px;
+        }
+        .target-zone {
+          position: absolute;
+          width: 100%;
+          height: 5px;
+          background: rgba(255, 255, 0, 0.5); /* Zone de cible semi-transparente */
+          top: 80%; /* Zone où les notes doivent arriver */
+        }
+      `}</style>
         </div>
     );
 }
+
+export default PianoTilesGame;
