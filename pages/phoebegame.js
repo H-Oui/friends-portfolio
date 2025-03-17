@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
-export default function PianoTilesGame() {
+
+
+ function PianoTilesGame() {
     const [tiles, setTiles] = useState([]);
     const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
@@ -167,3 +169,4 @@ export default function PianoTilesGame() {
     );
 }
 
+export default PianoTilesGame;
