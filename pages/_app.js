@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import "../styles/style.css";
 import '../styles/Game.css';
+import '../styles/MiniGamesPage.css';
 
 console.log('App component rendered');
 

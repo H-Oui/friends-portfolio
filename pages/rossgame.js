@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Menu from "../components/menu";
 
-export default function DinoGame() {
+export default function RossGame() {
     const [dinoPosition, setDinoPosition] = useState(0); // Position du dino (0 = au sol)
     const [isJumping, setIsJumping] = useState(false); // Si le dino est en train de sauter
     const [obstacles, setObstacles] = useState([]); // Liste des obstacles
@@ -36,7 +37,7 @@ export default function DinoGame() {
 
         // Jouer l'effet sonore de Ross
         const rossPivotSound = '/ross.mp3';
-        new Audio(rossPivotSound).play();// Assurez-vous que le fichier existe
+        new Audio(rossPivotSound).play(); // Assurez-vous que le fichier existe
 
         setTimeout(() => {
             setDinoPosition(0); // Retour au sol
@@ -109,22 +110,40 @@ export default function DinoGame() {
                 flexDirection: "column", // Contenu en colonne
             }}
         >
+
+            <Menu/>
             {/* Écran de démarrage */}
             {!isPlaying && !gameOver && (
-                <div style={{ textAlign: "center" }}>
-                    <h2>Les règles du jeu</h2>
-                    <p>
-                        Appuie sur la barre d'espace ou la flèche vers le haut pour faire sauter le Dino.
-                        Évite les obstacles qui arrivent de la gauche. Si tu touches un obstacle, le jeu est terminé !
+                <div style={{ textAlign: "center", padding: "20px", color: "#333" }}>
+                    <h2 style={{ fontSize: "2rem", marginBottom: "10px" }}>Game Rules</h2>
+                    <p style={{ fontSize: "1.2rem", marginBottom: "20px" }}>
+                        Tap or click on the Dino to make it jump!<br />
+                        Avoid the obstacles coming from the left. If you hit an obstacle, the game is over!
                     </p>
-                    <button onClick={() => setIsPlaying(true)}>Start Game</button>
+                    <button
+                        onClick={() => setIsPlaying(true)}
+                        style={{
+                            backgroundColor: "#f07c00",
+                            color: "#fff",
+                            fontSize: "1.5rem",
+                            padding: "10px 20px",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            border: "none",
+                            transition: "all 0.3s ease-in-out",
+                        }}
+                        onMouseOver={(e) => e.target.style.backgroundColor = "#e66a00"}
+                        onMouseOut={(e) => e.target.style.backgroundColor = "#f07c00"}
+                    >
+                        Start Game
+                    </button>
                 </div>
             )}
 
             {/* Écran de fin de jeu */}
             {gameOver && (
-                <div style={{ textAlign: "center" }}>
-                    <h2>Game Over! Your Score: {score}</h2>
+                <div style={{ textAlign: "center", padding: "20px", color: "#333" }}>
+                    <h2 style={{ fontSize: "2rem", marginBottom: "10px" }}>Game Over! Your Score: {score}</h2>
                     <button
                         onClick={() => {
                             setIsPlaying(true);
@@ -133,6 +152,18 @@ export default function DinoGame() {
                             setGameOver(false);
                             setSpeed(1); // Réinitialiser la vitesse
                         }}
+                        style={{
+                            backgroundColor: "#f07c00",
+                            color: "#fff",
+                            fontSize: "1.5rem",
+                            padding: "10px 20px",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            border: "none",
+                            transition: "all 0.3s ease-in-out",
+                        }}
+                        onMouseOver={(e) => e.target.style.backgroundColor = "#e66a00"}
+                        onMouseOut={(e) => e.target.style.backgroundColor = "#f07c00"}
                     >
                         Play Again
                     </button>
@@ -140,7 +171,7 @@ export default function DinoGame() {
                     {/* Afficher la vidéo de Ross */}
                     <div style={{ marginTop: "20px" }}>
                         <video width="200" controls autoPlay>
-                            <source src="/fineRoss.mp4" type="video/mp4" /> {/* Assurez-vous que la vidéo est dans le bon chemin */}
+                            <source src="/fineRoss.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                     </div>
@@ -149,7 +180,7 @@ export default function DinoGame() {
 
             {isPlaying && (
                 <>
-                    <div style={{ position: "absolute", top: "10px", left: "10px" }}>
+                    <div style={{ position: "absolute", top: "10px", left: "10px", color: "#333" }}>
                         <h3>Score: {score}</h3>
                     </div>
 
@@ -174,7 +205,9 @@ export default function DinoGame() {
                                 right: "10%", // Le Dino est maintenant à droite
                                 fontSize: "3rem",
                                 transform: "translateX(50%)", // Centrer le Dino par rapport à la position droite
+                                cursor: "pointer", // Ajout du curseur pour cliquer sur le dino
                             }}
+                            onClick={handleJump} // Permet de sauter en cliquant
                         >
                             🦖
                         </motion.div>

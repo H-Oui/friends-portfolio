@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Menu from "../components/menu";
 
 export default function JoeyFoodGame() {
-    const [joeyPosition, setJoeyPosition] = useState(50); // Position en %
+    const [joeyPosition, setJoeyPosition] = useState(50); // Position in %
     const [foods, setFoods] = useState([]);
     const [score, setScore] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(30); // Durée du jeu
+    const [timeLeft, setTimeLeft] = useState(30); // Game duration
     const [isPlaying, setIsPlaying] = useState(false);
     const [endMessage, setEndMessage] = useState("");
 
@@ -17,7 +18,7 @@ export default function JoeyFoodGame() {
                 ...prevFoods,
                 { id: Date.now(), x: Math.random() * 90, type: getRandomFood() }
             ]);
-        }, 1000); // Un aliment toutes les secondes
+        }, 1000); // Food appears every second
 
         return () => clearInterval(interval);
     }, [isPlaying]);
@@ -43,16 +44,16 @@ export default function JoeyFoodGame() {
                 if (prevTime <= 1) {
                     clearInterval(timer);
                     setIsPlaying(false);
-                    setFoods([]); // Vide les aliments
-                    // Déterminer le message en fonction du score
+                    setFoods([]); // Clear foods
+                    // Determine end message based on score
                     if (score >= 300) {
-                        setEndMessage("🔥 Tu es une machine, tu es plus accro a la nourriture que Joey !");
+                        setEndMessage("🔥 You're a food machine, more obsessed than Joey!");
                     } else if (score >= 200) {
-                        setEndMessage("🔥 Incroyable, Joey serait fier de toi !");
+                        setEndMessage("🔥 Incredible, Joey would be proud!");
                     } else if (score >= 50) {
-                        setEndMessage("😋 Bien joué ! Joey partage presque sa nourriture avec toi !");
+                        setEndMessage("😋 Well done! Joey almost shares food with you!");
                     } else {
-                        setEndMessage("😢 Joey pleure... Tu dois manger plus !");
+                        setEndMessage("😢 Joey is crying... You need to eat more!");
                     }
                     return 0;
                 }
@@ -89,45 +90,65 @@ export default function JoeyFoodGame() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                color: "white",
+                textAlign: "center",
+                fontFamily: "Arial, sans-serif",
             }}
         >
-            {/* Bouton Start avant le début du jeu */}
+            <Menu />
+            {/* Start button before game begins */}
             {!isPlaying && !endMessage && (
                 <div>
-                <p>
-                    Utilisez les fleches pour jouer
-                </p>
-                <button onClick={() => setIsPlaying(true)} className="start-button">
-                    🎮 Start
-                </button>
+                    <h2 style={{ fontSize: "2rem", fontWeight: "bold" }}>Ready to catch Joey's food?</h2>
+                    <p style={{ fontSize: "1.2rem", fontStyle: "italic" }}>Use the left and right arrows or swipe to move Joey!</p>
+                    <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Catch as much food as you can to score big!</p>
+                    <button
+                        onClick={() => setIsPlaying(true)}
+                        className="start-button"
+                        style={{
+                            padding: "10px 20px",
+                            fontSize: "1.5rem",
+                            backgroundColor: "yellow",
+                            border: "none",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            marginTop: "20px",
+                        }}
+                    >
+                        🎮 Start Game
+                    </button>
                 </div>
             )}
 
-            {/* Message de fin quand le jeu est terminé */}
+            {/* End message after the game finishes */}
             {!isPlaying && endMessage && (
-                <div className="end-message">
-                    <h2>{endMessage}</h2>
-                    <button onClick={() => {
-                        setScore(0);
-                        setTimeLeft(30);
-                        setEndMessage("");
-                        setIsPlaying(true);
-                    }}>
-                        🔄 Rejouer
+                <div className="end-message" style={{ padding: "20px", backgroundColor: "rgba(0,0,0,0.5)", borderRadius: "10px", width: "80%" }}>
+                    <h2 style={{ fontSize: "2rem", color: "white" }}>{endMessage}</h2>
+                    <button
+                        onClick={() => {
+                            setScore(0);
+                            setTimeLeft(30);
+                            setEndMessage("");
+                            setIsPlaying(true);
+                        }}
+                        style={{
+                            padding: "10px 20px",
+                            fontSize: "1.5rem",
+                            backgroundColor: "yellow",
+                            border: "none",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            marginTop: "20px",
+                        }}
+                    >
+                        🔄 Play Again
                     </button>
                 </div>
             )}
 
             {isPlaying && (
                 <>
-                    <div className="game-info" style={
-                        {
-                            position: "absolute",
-                            top : "10px",
-                            left : "10px",
-
-                        }
-                    }>
+                    <div className="game-info" style={{ position: "absolute", top: "10px", left: "10px", fontSize: "1.5rem" }}>
                         <h3>Score: {score}</h3>
                         <h3>Time Left: {timeLeft}s</h3>
                     </div>
@@ -146,7 +167,7 @@ export default function JoeyFoodGame() {
                         🧑‍🦱
                     </motion.div>
 
-                    {/* Aliments qui tombent */}
+                    {/* Falling foods */}
                     {foods.map((food) => (
                         <motion.div
                             key={food.id}
@@ -157,17 +178,17 @@ export default function JoeyFoodGame() {
                                 left: `${food.x}%`,
                                 fontSize: "2rem",
                             }}
-                            animate={{ top: "90%" }} // Fait descendre jusqu'à presque en bas
+                            animate={{ top: "90%" }} // Makes the food fall down
                             transition={{ duration: 3, ease: "linear" }}
                             onAnimationComplete={() => {
-                                const joeyLeft = joeyPosition; // Position actuelle de Joey
+                                const joeyLeft = joeyPosition; // Current position of Joey
 
-                                // Vérifie si l'aliment tombe dans la zone de Joey
+                                // Check if food lands in Joey's area
                                 if (Math.abs(food.x - joeyLeft) < 10) {
                                     setScore((prevScore) => prevScore + 10);
                                 }
 
-                                // Supprime l'aliment après la chute
+                                // Remove the food after it falls
                                 setFoods((prevFoods) => prevFoods.filter((f) => f.id !== food.id));
                             }}
                         >

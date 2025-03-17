@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Menu from '../components/menu';
 
 export default function CharactersScroll() {
     const [isCleaning, setIsCleaning] = useState(false);
@@ -135,7 +136,7 @@ export default function CharactersScroll() {
 
     return (
         <div style={{ transform: `rotate(${rotation}deg)` }}>
-
+            <Menu />
             {/* Monica */}
             <div className="character-container">
                 <div className="character-content">

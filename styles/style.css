@@ -22,6 +22,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: auto;
     background-color: black;
     font-family: "Friends", sans-serif;
 }
@@ -63,7 +64,7 @@ body {
 
 /* 🧼 Animation de l'éponge */
 .sponge {
-    z-index: 100;
+    z-index: 50;
     font-size: 2rem;
     cursor: pointer;
     position: absolute;
@@ -275,4 +276,92 @@ body {
 @keyframes fadeOut {
     0% { opacity: 1; }
     100% { opacity: 0; }
+}
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.menu.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+
+}
+
+.menu-list li {
+    margin: 20px 0;
+}
+
+.menu-list a {
+    font-size: 32px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.red { color: red; }
+.blue { color: blue; }
+.yellow { color: yellow; }
+
+
+@media (max-width: 768px) {
+
+    .character-content {
+        flex-direction: column;
+        height: auto;
+        width: 100%;
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .character-card {
+        flex: none;
+        width: 80%;
+        padding: 20px;
+        margin-top: 10px;
+    }
+
+    .character-image {
+        width: 50%;
+        border-radius: 10px;
+    }
+
+    .character-description {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .character-quote {
+        font-size: 1.2rem;
+    }
 }

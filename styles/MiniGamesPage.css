@@ -1,0 +1,12 @@
+.mini-games-page {
+    font-family: 'Friends', sans-serif;
+    text-align: center;
+}
+
+.game-card img {
+    border-radius: 10px;
+}
+
+.play-button:hover {
+    background-color: #e66a00;
+}

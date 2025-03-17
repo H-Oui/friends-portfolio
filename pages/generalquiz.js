@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Menu from "../components/menu";
 
 const questions = [
     {
@@ -123,6 +124,7 @@ function Quiz() {
 
     return (
         <div className="quiz-container">
+            <Menu />
             <h1>Friends Quiz - How big of a fan are you?</h1>
             {!quizFinished ? (
                 <div>
@@ -158,18 +160,21 @@ function Quiz() {
                     background-color: black;
                     color: white;
                     height: 100vh;
-                 
+                    padding: 20px;
                 }
                 h1 {
                     font-family: 'Friends', sans-serif;
                     font-size: 3rem;
                     color: #ff8c00;
+                    margin-bottom: 20px;
                 }
                 h2 {
                     font-size: 1.5rem;
+                    margin-bottom: 10px;
                 }
                 h3 {
                     font-size: 1.2rem;
+                    margin-top: 10px;
                 }
                 .answers {
                     margin-top: 20px;
@@ -177,21 +182,22 @@ function Quiz() {
                 .answer-btn {
                     background-color: #444;
                     color: white;
-                    padding: 10px 20px;
-                    margin: 5px;
+                    padding: 12px 24px;
+                    margin: 8px;
                     border: none;
                     border-radius: 5px;
                     cursor: pointer;
                     font-size: 16px;
+                    transition: background-color 0.3s;
                 }
                 .answer-btn:hover {
-                    background-color: #666;
+                    background-color: #ff8c00;
                 }
                 .answer-btn.selected {
                     background-color: #ff8c00;
                 }
                 button {
-                    padding: 10px 20px;
+                    padding: 12px 24px;
                     font-size: 18px;
                     cursor: pointer;
                     border: none;
@@ -199,6 +205,7 @@ function Quiz() {
                     color: white;
                     border-radius: 5px;
                     margin-top: 20px;
+                    transition: background-color 0.3s;
                 }
                 button:hover {
                     background-color: #0056b3;
@@ -210,11 +217,11 @@ function Quiz() {
                     }
                     .answer-btn {
                         font-size: 14px;
-                        padding: 8px 15px;
+                        padding: 10px 18px;
                     }
                     button {
                         font-size: 16px;
-                        padding: 8px 15px;
+                        padding: 10px 18px;
                     }
                 }
             `}</style>

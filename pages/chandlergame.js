@@ -1,55 +1,75 @@
 import React, { useState } from 'react';
+import Menu from "../components/menu";
 
 const style = {
-
     container: {
         textAlign: 'center',
-        backgroundColor: 'yellow',
+        backgroundColor: '#FFEB3B', // Jaune léger pour une meilleure lecture
         fontFamily: "'Arial', sans-serif",
         height: '100vh',
-        borderRadius: '10px',
-        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+        borderRadius: '15px',
+        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        padding: '30px',
+        overflow: 'hidden',
     },
     title: {
-
-        fontSize: '2.5em',
+        fontSize: '3em',
         color: '#3e3e3e',
-
+        marginBottom: '20px',
+        fontWeight: 'bold',
+        letterSpacing: '2px',
+        textTransform: 'uppercase',
+        animation: 'fadeIn 1s ease-in-out',
+    },
+    rules: {
+        fontSize: '1.1em',
+        color: '#333',
+        marginBottom: '40px',
+        padding: '0 10px',
+        fontWeight: 'bold',
+        lineHeight: '1.5',
+        animation: 'fadeIn 1s ease-in-out',
     },
     question: {
-        fontSize: '1.5em',
+        fontSize: '1.6em',
         marginBottom: '20px',
-    },
-    button: {
-        padding: '10px 20px',
-        fontSize: '1.2em',
-        backgroundColor: '#f4a300',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
+        color: '#444',
+        fontStyle: 'italic',
+        animation: 'fadeIn 1.5s ease-in-out',
     },
     choices: {
         marginTop: '20px',
         display: 'flex',
+        flexDirection: 'column',
+        gap: '15px',
         justifyContent: 'center',
-        gap: '20px',
+        alignItems: 'center',
     },
     choiceButton: {
-        padding: '10px 20px',
-        backgroundColor: '#ffcb00',
+        padding: '15px 25px',
+        backgroundColor: '#FF9800', // Orange vif pour plus de visibilité
         border: 'none',
-        borderRadius: '5px',
+        borderRadius: '10px',
         cursor: 'pointer',
         fontSize: '1.2em',
+        fontWeight: 'bold',
+        color: '#fff',
+        width: '250px',
+        transition: 'transform 0.3s, background-color 0.3s',
+    },
+    choiceButtonHover: {
+        transform: 'scale(1.1)',
+        backgroundColor: '#FF5722', // Couleur plus chaude au survol
     },
     result: {
-        marginTop: '20px',
-        fontSize: '1.5em',
-        color: 'green',
+        marginTop: '30px',
+        fontSize: '1.4em',
+        color: '#388E3C', // Vert pour une réponse positive
+        fontWeight: 'bold',
     },
 };
 
@@ -108,6 +128,7 @@ function ChandlerGame() {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
     const [resultMessage, setResultMessage] = useState("");
+    const [hoveredChoice, setHoveredChoice] = useState(null);
 
     const handleChoice = (choice) => {
         if (choice === questions[currentQuestion].answer) {
@@ -129,14 +150,20 @@ function ChandlerGame() {
 
     return (
         <div style={style.container}>
+            <Menu />
             <h1 style={style.title}>Chandler's Catchphrase Builder</h1>
+            <p style={style.rules}>
+                The goal of this game is to complete Chandler’s famous catchphrases from the Friends series. Select the word that best completes the phrase and test your knowledge of this iconic character!
+            </p>
             <p style={style.question}>{questions[currentQuestion].question}</p>
             <div style={style.choices}>
                 {questions[currentQuestion].choices.map((choice, index) => (
                     <button
                         key={index}
-                        style={style.choiceButton}
+                        style={hoveredChoice === index ? {...style.choiceButton, ...style.choiceButtonHover} : style.choiceButton}
                         onClick={() => handleChoice(choice)}
+                        onMouseEnter={() => setHoveredChoice(index)}
+                        onMouseLeave={() => setHoveredChoice(null)}
                     >
                         {choice}
                     </button>

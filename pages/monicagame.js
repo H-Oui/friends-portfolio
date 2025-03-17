@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import Menu from "../components/menu";
 
 export default function KitchenRush() {
     const dishes = ["lasagna", "pizza", "pasta", "burger", "salad", "soup", "taco", "sushi"];
-    const gameDuration = 30; // Durée du jeu en secondes
-    const initialTimePerDish = 5; // Temps de base par plat
-    const hardModeTime = 3; // Temps par plat en mode difficile
+    const gameDuration = 30; // Game duration in seconds
+    const initialTimePerDish = 5; // Base time per dish
+    const hardModeTime = 3; // Time per dish in hard mode
 
     const [currentDish, setCurrentDish] = useState("");
     const [inputValue, setInputValue] = useState("");
@@ -40,7 +41,7 @@ export default function KitchenRush() {
 
         if (globalTimeLeft === 15 && !difficultyIncreased) {
             setDifficultyIncreased(true);
-            setTimeLeft(hardModeTime); // Augmente la difficulté après 15s
+            setTimeLeft(hardModeTime); // Increase difficulty after 15s
         }
     }, [globalTimeLeft, difficultyIncreased]);
 
@@ -97,21 +98,22 @@ export default function KitchenRush() {
 
     return (
         <div style={styles.container}>
+            <Menu />
             {!isPlaying ? (
                 <>
                     <h1 style={styles.title}>Monica’s Kitchen Rush</h1>
                     <p style={styles.description}>
-                        Tapez le maximum de plats **en 30 secondes** ! ⏳<br />
-                        Chaque bonne réponse donne **+10 points**.<br />
-                        À **15s**, le temps pour répondre **diminue** ! ⚡<br />
-                        <strong>Prêt(e) ? Cliquez sur "Start Game" !</strong>
+                        Type as many dishes as you can in 30 seconds! ⏳<br />
+                        Each correct answer gives +10 points.<br />
+                        After 15 seconds, the time to answer shortens! ⚡<br />
+                        <strong>Ready? Click "Start Game"!</strong>
                     </p>
                     {gameOver ? (
                         <div style={styles.gameOverContainer}>
                             <h2>Game Over!</h2>
-                            <h3>Score final: {score}</h3>
-                            <h3>Erreurs: {errors}</h3>
-                            <button onClick={restartGame} style={styles.button}>Rejouer</button>
+                            <h3>Final Score: {score}</h3>
+                            <h3>Errors: {errors}</h3>
+                            <button onClick={restartGame} style={styles.button}>Play Again</button>
                         </div>
                     ) : (
                         <button onClick={() => setIsPlaying(true)} style={styles.button}>Start Game</button>
@@ -120,10 +122,10 @@ export default function KitchenRush() {
             ) : (
                 <>
                     <h2 style={styles.dish}>Dish: {currentDish}</h2>
-                    <h3>Temps restant: {globalTimeLeft}s</h3>
-                    <h3>Temps pour répondre: {timeLeft}s</h3>
+                    <h3>Time Left: {globalTimeLeft}s</h3>
+                    <h3>Time to Answer: {timeLeft}s</h3>
                     <h3>Score: {score}</h3>
-                    <h3>Erreurs: {errors}</h3>
+                    <h3>Errors: {errors}</h3>
                     <input
                         type="text"
                         value={inputValue}
@@ -142,7 +144,7 @@ const styles = {
     container: {
         textAlign: "center",
         padding: "20px",
-        backgroundColor: "#C62828", // Rouge Monica
+        backgroundColor: "#C62828", // Monica's Red
         color: "#FFF",
         height: "100vh",
         display: "flex",
@@ -155,38 +157,45 @@ const styles = {
         fontWeight: "bold",
         marginBottom: "15px",
         textTransform: "uppercase",
+        letterSpacing: "2px",
     },
     description: {
         fontSize: "18px",
         marginBottom: "20px",
-        maxWidth: "500px",
-        lineHeight: "1.5",
+        maxWidth: "600px",
+        lineHeight: "1.6",
+        fontFamily: "'Arial', sans-serif",
     },
     dish: {
         fontSize: "24px",
         fontWeight: "bold",
+        marginTop: "10px",
     },
     button: {
-        backgroundColor: "#FF9800", // Orange Friends
+        backgroundColor: "#FF9800", // Friends Orange
         color: "#FFF",
-        padding: "10px 20px",
-        fontSize: "18px",
+        padding: "12px 24px",
+        fontSize: "20px",
         border: "none",
-        borderRadius: "5px",
+        borderRadius: "8px",
         cursor: "pointer",
-        marginTop: "10px",
+        marginTop: "20px",
+        transition: "background-color 0.3s",
     },
     input: {
-        padding: "10px",
+        padding: "12px",
         fontSize: "18px",
         border: "2px solid #FFF",
-        borderRadius: "5px",
+        borderRadius: "8px",
         textAlign: "center",
-        marginTop: "10px",
+        marginTop: "15px",
+        width: "80%",
+        maxWidth: "350px",
     },
     gameOverContainer: {
         backgroundColor: "#000",
-        padding: "20px",
-        borderRadius: "10px",
+        padding: "25px",
+        borderRadius: "15px",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
     },
 };
