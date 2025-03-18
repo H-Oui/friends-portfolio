@@ -7,7 +7,7 @@ function PianoTilesGame() {
     const [gameOver, setGameOver] = useState(false);
     const [gameStarted, setGameStarted] = useState(false);
     const [isClient, setIsClient] = useState(false);
-    const [audioReady, setAudioReady] = useState(false); // État pour savoir si le son peut être joué
+    const [audioReady, setAudioReady] = useState(false);
     const tileSpeed = 3;
     const keys = ["Q", "S", "D", "F", "G", "H", "J", "K"];
     const audioRef = useRef(null);
@@ -16,7 +16,7 @@ function PianoTilesGame() {
     const playSound = () => {
         if (audioRef.current && !audioReady) {
             audioRef.current.play();
-            setAudioReady(true); // Le son est désormais prêt à être joué
+            setAudioReady(true);
         }
     };
 
@@ -31,7 +31,7 @@ function PianoTilesGame() {
         if (typeof window !== "undefined") {
             audioRef.current = new Audio("/piano-cat.mp3");
         }
-        setIsClient(true); // S'assurer que le code s'exécute sur le client
+        setIsClient(true);
     }, []);
 
     useEffect(() => {
@@ -65,7 +65,7 @@ function PianoTilesGame() {
     const handleKeyPress = (e) => {
         const key = e.key.toUpperCase();
         if (keys.includes(key)) {
-            playSound(); // Assure-toi que le son est joué lors de la première touche
+            playSound();
             const tileIndex = tiles.findIndex((tile) => tile.key === key && tile.y > 70 && tile.y < 90);
             if (tileIndex !== -1) {
                 setScore((prev) => prev + 1);
@@ -77,7 +77,7 @@ function PianoTilesGame() {
     };
 
     const handleTileClick = (tile) => {
-        if (!audioReady) playSound(); // Assure que le son est joué dès le clic
+        if (!audioReady) playSound();
         if (tile.y > 70 && tile.y < 90) {
             setScore((prev) => prev + 1);
             const newTiles = tiles.filter(t => t.id !== tile.id);

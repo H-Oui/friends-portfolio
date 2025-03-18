@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import Menu from "../components/menu";
 
 export default function JoeyFoodGame() {
-    const [joeyPosition, setJoeyPosition] = useState(50); // Position in %
+    const [joeyPosition, setJoeyPosition] = useState(50);
     const [foods, setFoods] = useState([]);
     const [score, setScore] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(30); // Game duration
+    const [timeLeft, setTimeLeft] = useState(30);
     const [isPlaying, setIsPlaying] = useState(false);
     const [endMessage, setEndMessage] = useState("");
 
@@ -18,7 +18,7 @@ export default function JoeyFoodGame() {
                 ...prevFoods,
                 { id: Date.now(), x: Math.random() * 90, type: getRandomFood() }
             ]);
-        }, 1000); // Food appears every second
+        }, 1000);
 
         return () => clearInterval(interval);
     }, [isPlaying]);
@@ -44,8 +44,8 @@ export default function JoeyFoodGame() {
                 if (prevTime <= 1) {
                     clearInterval(timer);
                     setIsPlaying(false);
-                    setFoods([]); // Clear foods
-                    // Determine end message based on score
+                    setFoods([]);
+
                     if (score >= 300) {
                         setEndMessage("🔥 You're a food machine, more obsessed than Joey!");
                     } else if (score >= 200) {
@@ -178,17 +178,16 @@ export default function JoeyFoodGame() {
                                 left: `${food.x}%`,
                                 fontSize: "2rem",
                             }}
-                            animate={{ top: "90%" }} // Makes the food fall down
+                            animate={{ top: "90%" }}
                             transition={{ duration: 3, ease: "linear" }}
                             onAnimationComplete={() => {
-                                const joeyLeft = joeyPosition; // Current position of Joey
+                                const joeyLeft = joeyPosition;
 
-                                // Check if food lands in Joey's area
                                 if (Math.abs(food.x - joeyLeft) < 10) {
                                     setScore((prevScore) => prevScore + 10);
                                 }
 
-                                // Remove the food after it falls
+
                                 setFoods((prevFoods) => prevFoods.filter((f) => f.id !== food.id));
                             }}
                         >

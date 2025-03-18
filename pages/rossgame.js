@@ -3,49 +3,49 @@ import { motion } from "framer-motion";
 import Menu from "../components/menu";
 
 export default function RossGame() {
-    const [dinoPosition, setDinoPosition] = useState(0); // Position du dino (0 = au sol)
-    const [isJumping, setIsJumping] = useState(false); // Si le dino est en train de sauter
-    const [obstacles, setObstacles] = useState([]); // Liste des obstacles
-    const [score, setScore] = useState(0); // Score du jeu
-    const [isPlaying, setIsPlaying] = useState(false); // Si le jeu est en cours
-    const [gameOver, setGameOver] = useState(false); // Si le jeu est terminé
-    const [speed, setSpeed] = useState(1); // Vitesse de déplacement des obstacles
+    const [dinoPosition, setDinoPosition] = useState(0);
+    const [isJumping, setIsJumping] = useState(false);
+    const [obstacles, setObstacles] = useState([]);
+    const [score, setScore] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [gameOver, setGameOver] = useState(false);
+    const [speed, setSpeed] = useState(1);
 
-    // Types d'obstacles en lien avec Ross
+
     const obstacleTypes = ["📚", "🥪", "🎹", "🛋️"];
 
     useEffect(() => {
         if (!isPlaying) return;
 
-        // Créer un obstacle toutes les 2 secondes
+
         const interval = setInterval(() => {
             const randomObstacle = obstacleTypes[Math.floor(Math.random() * obstacleTypes.length)];
             setObstacles((prevObstacles) => [
                 ...prevObstacles,
-                { id: Date.now(), x: -10, y: 0, type: randomObstacle } // Position initiale à gauche de l'écran
+                { id: Date.now(), x: -10, y: 0, type: randomObstacle }
             ]);
         }, 1500);
 
         return () => clearInterval(interval);
     }, [isPlaying]);
 
-    // Gérer le saut du Dino avec le son de Ross
+
     const handleJump = () => {
         if (isJumping) return;
         setIsJumping(true);
-        setDinoPosition(100); // Saut
+        setDinoPosition(100);
 
-        // Jouer l'effet sonore de Ross
+
         const rossPivotSound = '/ross.mp3';
-        new Audio(rossPivotSound).play(); // Assurez-vous que le fichier existe
+        new Audio(rossPivotSound).play();
 
         setTimeout(() => {
-            setDinoPosition(0); // Retour au sol
+            setDinoPosition(0);
             setIsJumping(false);
-        }, 800); // Temps du saut (augmenté à 800ms pour un saut plus long)
+        }, 800);
     };
 
-    // Contrôles du jeu
+
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === " " || e.key === "ArrowUp") {
@@ -57,21 +57,21 @@ export default function RossGame() {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [isJumping]);
 
-    // Gérer la descente des obstacles (de gauche à droite) avec augmentation progressive de la vitesse
+
     useEffect(() => {
         if (!isPlaying) return;
 
-        // Augmenter la vitesse tous les 5 secondes
+
         const speedInterval = setInterval(() => {
-            setSpeed((prevSpeed) => prevSpeed + 0.10); // Augmente la vitesse de 2% toutes les 5 secondes
+            setSpeed((prevSpeed) => prevSpeed + 0.10);
         }, 3000);
 
         const obstacleInterval = setInterval(() => {
             setObstacles((prevObstacles) =>
-                prevObstacles.map((obs) => ({ ...obs, x: obs.x + speed })) // Déplacement des obstacles avec la vitesse dynamique
+                prevObstacles.map((obs) => ({ ...obs, x: obs.x + speed }))
             );
-            setScore((prevScore) => prevScore + 1); // Augmente le score
-        }, 20); // Intervalle de 20ms pour la descente des obstacles
+            setScore((prevScore) => prevScore + 1);
+        }, 20);
 
         return () => {
             clearInterval(speedInterval);
@@ -79,12 +79,12 @@ export default function RossGame() {
         };
     }, [isPlaying, speed]);
 
-    // Vérifier les collisions
+
     useEffect(() => {
         const checkCollisions = () => {
             for (const obs of obstacles) {
-                // Si l'obstacle touche le Dino (en tenant compte de la position en hauteur du dino pendant le saut)
-                if (obs.x >= 80 && obs.x <= 90 && dinoPosition === 0) { // Ajuster la position du Dino à droite
+
+                if (obs.x >= 80 && obs.x <= 90 && dinoPosition === 0) {
                     setGameOver(true);
                     setIsPlaying(false);
                 }
@@ -101,13 +101,13 @@ export default function RossGame() {
                 position: "relative",
                 width: "100%",
                 height: "100vh",
-                backgroundColor: "#f7e300", // Fond jaune
+                backgroundColor: "#f7e300",
                 overflow: "hidden",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center", // Centrage du contenu
+                alignItems: "center",
                 borderRadius: "10px",
-                flexDirection: "column", // Contenu en colonne
+                flexDirection: "column",
             }}
         >
 
@@ -150,7 +150,7 @@ export default function RossGame() {
                             setObstacles([]);
                             setScore(0);
                             setGameOver(false);
-                            setSpeed(1); // Réinitialiser la vitesse
+                            setSpeed(1);
                         }}
                         style={{
                             backgroundColor: "#f07c00",
@@ -168,7 +168,7 @@ export default function RossGame() {
                         Play Again
                     </button>
 
-                    {/* Afficher la vidéo de Ross */}
+
                     <div style={{ marginTop: "20px" }}>
                         <video width="200" controls autoPlay>
                             <source src="/fineRoss.mp4" type="video/mp4" />
@@ -184,14 +184,14 @@ export default function RossGame() {
                         <h3>Score: {score}</h3>
                     </div>
 
-                    {/* Piste au centre sans fond gris */}
+
                     <div
                         style={{
                             position: "absolute",
                             top: "50%",
                             width: "80%",
                             height: "150px",
-                            transform: "translateY(-50%)", // Centrer verticalement
+                            transform: "translateY(-50%)",
                             left: "10%",
                             overflow: "hidden",
                         }}
@@ -202,12 +202,12 @@ export default function RossGame() {
                             style={{
                                 position: "absolute",
                                 bottom: `${dinoPosition}%`,
-                                right: "10%", // Le Dino est maintenant à droite
+                                right: "10%",
                                 fontSize: "3rem",
-                                transform: "translateX(50%)", // Centrer le Dino par rapport à la position droite
-                                cursor: "pointer", // Ajout du curseur pour cliquer sur le dino
+                                transform: "translateX(50%)",
+                                cursor: "pointer",
                             }}
-                            onClick={handleJump} // Permet de sauter en cliquant
+                            onClick={handleJump}
                         >
                             🦖
                         </motion.div>

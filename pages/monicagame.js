@@ -3,9 +3,9 @@ import Menu from "../components/menu";
 
 export default function KitchenRush() {
     const dishes = ["lasagna", "pizza", "pasta", "burger", "salad", "soup", "taco", "sushi"];
-    const gameDuration = 30; // Game duration in seconds
-    const initialTimePerDish = 5; // Base time per dish
-    const hardModeTime = 3; // Time per dish in hard mode
+    const gameDuration = 30;
+    const initialTimePerDish = 5;
+    const hardModeTime = 3;
 
     const [currentDish, setCurrentDish] = useState("");
     const [inputValue, setInputValue] = useState("");
@@ -41,7 +41,7 @@ export default function KitchenRush() {
 
         if (globalTimeLeft === 15 && !difficultyIncreased) {
             setDifficultyIncreased(true);
-            setTimeLeft(hardModeTime); // Increase difficulty after 15s
+            setTimeLeft(hardModeTime);
         }
     }, [globalTimeLeft, difficultyIncreased]);
 
@@ -144,7 +144,7 @@ const styles = {
     container: {
         textAlign: "center",
         padding: "20px",
-        backgroundColor: "#C62828", // Monica's Red
+        backgroundColor: "#C62828",
         color: "#FFF",
         height: "100vh",
         display: "flex",
@@ -172,7 +172,7 @@ const styles = {
         marginTop: "10px",
     },
     button: {
-        backgroundColor: "#FF9800", // Friends Orange
+        backgroundColor: "#FF9800",
         color: "#FFF",
         padding: "12px 24px",
         fontSize: "20px",

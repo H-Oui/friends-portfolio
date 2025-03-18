@@ -11,7 +11,7 @@ export default function IndexPage() {
     useEffect(() => {
         const interval = setInterval(() => {
             setIsBlinking((prev) => !prev);
-        }, 500); // Clignotement toutes les 500ms
+        }, 500);
         return () => clearInterval(interval);
     }, []);
 

@@ -31,7 +31,7 @@ export default function CharactersScroll() {
         setShowStain(true);
         setIsCleaning(true);
         const spongeSound = '/monica.mp3';
-        new Audio(spongeSound).play();  // Jouer le son de l'éponge
+        new Audio(spongeSound).play();
         setTimeout(() => {
             setIsCleaning(false);
             setShowStain(false);
@@ -41,7 +41,7 @@ export default function CharactersScroll() {
     const handleSandwichClick = () => {
         setIsProtectingFood(true);
 
-        // Afficher les aliments un par un
+
         setFoodItems([
             { id: 1, name: "🍕", x: Math.random() * 300, y: Math.random() * 100, moving: false },
             { id: 2, name: "🍔", x: Math.random() * 150, y: Math.random() * 80, moving: false },
@@ -52,7 +52,7 @@ export default function CharactersScroll() {
         setShowText(true);
         setShowJoeyText(true);
 
-        // Après 1 seconde, commencer à animer les aliments
+
         setTimeout(() => {
             setFoodItems(prevItems =>
                 prevItems.map(item => ({
@@ -91,42 +91,42 @@ export default function CharactersScroll() {
             return 0;
         });
         const rossPivotSound = '/ross.mp3';
-        new Audio(rossPivotSound).play(); // Jouer le son "Pivot!"
+        new Audio(rossPivotSound).play();
     };
 
     const handleCouchClickChandler = () => {
         setShowAnimals(true);
         const chickSound = '/short-chick-sound-171389.mp3';
-        new Audio(chickSound).play();  // Jouer le son des poussins et canards
+        new Audio(chickSound).play();
         const duckSound = '/duck-quack-112941.mp3';
-        new Audio(duckSound).play();  // Jouer le son des poussins et canards
+        new Audio(duckSound).play();
         setTimeout(() => {
             setShowAnimals(false);
-        }, 3000); // Cache les animaux après 3 secondes
+        }, 3000);
     };
 
     const handleGuitarClick = () => {
         setIsPlayingGuitar(true);
         const smellyCatSound = '/smelly-cat.mp3';
-        new Audio(smellyCatSound).play();  // Jouer la chanson "Smelly Cat"
+        new Audio(smellyCatSound).play();
         setTimeout(() => setIsPlayingGuitar(false), 1000);
     };
 
     const handleCatClick = () => {
         setShowSmellyCatText(true);
         setCatPosition({
-            x: Math.random() * 80 + 10, // Déplacement aléatoire en %
+            x: Math.random() * 80 + 10,
             y: Math.random() * 80 + 10
         });
 
-        setTimeout(() => setShowSmellyCatText(false), 3000); // Cache le texte après 3s
+        setTimeout(() => setShowSmellyCatText(false), 3000);
     };
 
     const handleBagClick = () => {
         setIsShoppingExplosion(true);
         setShowRachelText(true);
         const shoppingSound = '/rachel.mp3';
-        new Audio(shoppingSound).play();  // Jouer un son de shopping
+        new Audio(shoppingSound).play();
         setTimeout(() => {
             setIsShoppingExplosion(false);
         }, 2000);
@@ -224,8 +224,8 @@ export default function CharactersScroll() {
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{
                                     opacity: 1,
-                                    scale: item.shrinking ? 0.1 : 1, // Rétrécissement avant de disparaître
-                                    top: item.moving ? "50%" : `${item.y}%`, // Déplace vers le centre
+                                    scale: item.shrinking ? 0.1 : 1,
+                                    top: item.moving ? "50%" : `${item.y}%`,
                                     left: item.moving ? "50%" : `${item.x}%`,
                                     transition: { delay: index * 0.5, duration: 0.8 },
                                 }}

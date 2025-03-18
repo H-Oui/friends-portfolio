@@ -8,7 +8,7 @@ function Canape() {
 
     useFrame(() => {
         if (ref.current) {
-            ref.current.rotation.y += 0.015;  // Rotation continue autour de l'axe Y
+            ref.current.rotation.y += 0.015;
         }
     });
 

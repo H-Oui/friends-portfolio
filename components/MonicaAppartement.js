@@ -11,10 +11,10 @@ function Appartement() {
     const router = useRouter();
 
     const handleClick = (event) => {
-        if (isRedirecting) return; // Empêche les redirections multiples
+        if (isRedirecting) return;
 
         if (event.intersections.length > 0) {
-            const object = event.intersections[0].object; // Récupère le premier objet cliqué (le plus proche)
+            const object = event.intersections[0].object;
 
             console.log("Objet cliqué :", object.name);
 
@@ -27,7 +27,7 @@ function Appartement() {
                     const randomGame = games[Math.floor(Math.random() * games.length)];
 
                     router.push(randomGame);
-                    return 0; // Reset du compteur après redirection
+                    return 0;
                 }
 
                 return newCount;

@@ -4,7 +4,7 @@ import Menu from "../components/menu";
 const style = {
     container: {
         textAlign: 'center',
-        backgroundColor: '#FFEB3B', // Jaune léger pour une meilleure lecture
+        backgroundColor: '#FFEB3B',
         fontFamily: "'Arial', sans-serif",
         height: '100vh',
         borderRadius: '15px',
@@ -51,7 +51,7 @@ const style = {
     },
     choiceButton: {
         padding: '15px 25px',
-        backgroundColor: '#FF9800', // Orange vif pour plus de visibilité
+        backgroundColor: '#FF9800',
         border: 'none',
         borderRadius: '10px',
         cursor: 'pointer',
@@ -63,12 +63,12 @@ const style = {
     },
     choiceButtonHover: {
         transform: 'scale(1.1)',
-        backgroundColor: '#FF5722', // Couleur plus chaude au survol
+        backgroundColor: '#FF5722',
     },
     result: {
         marginTop: '30px',
         fontSize: '1.4em',
-        color: '#388E3C', // Vert pour une réponse positive
+        color: '#388E3C',
         fontWeight: 'bold',
     },
 };

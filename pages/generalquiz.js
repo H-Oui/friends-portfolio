@@ -107,12 +107,12 @@ function Quiz() {
             if (currentQuestion < questions.length - 1) {
                 setCurrentQuestion(currentQuestion + 1);
                 setSelectedAnswer(null);
-                setAnswerFeedback(""); // Reset feedback for next question
+                setAnswerFeedback("");
             } else {
                 setQuizFinished(true);
                 localStorage.setItem("quizScore", score + (answer === questions[currentQuestion].correctAnswer ? 1 : 0));
             }
-        }, 1500); // Delay to allow feedback to show before moving to next question
+        }, 1500);
     };
 
     const restartQuiz = () => {

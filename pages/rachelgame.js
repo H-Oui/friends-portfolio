@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Menu from "../components/menu";
 
-// Central Perk Memory Game
+
 export default function CentralPerkMemory() {
     const commandsList = ["☕ Café", "🍵 Tea", "🥛 Latte", "🍫 Hot Chocolate", "🧋 Bubble Tea"];
     const [commands, setCommands] = useState([]);
@@ -10,7 +10,7 @@ export default function CentralPerkMemory() {
     const [gameOver, setGameOver] = useState(false);
     const [score, setScore] = useState(0);
     const [difficulty, setDifficulty] = useState(3);
-    const [showRules, setShowRules] = useState(true); // Add state for showing rules
+    const [showRules, setShowRules] = useState(true);
 
     useEffect(() => {
         startNewRound();
@@ -22,8 +22,7 @@ export default function CentralPerkMemory() {
 
         if (reset) {
             setScore(0);
-            setDifficulty(3); // Reset difficulty to 3
-
+            setDifficulty(3);
             setTimeout(() => {
                 const newCommands = Array.from({ length: 3 }, () => commandsList[Math.floor(Math.random() * commandsList.length)]);
                 setCommands(newCommands);
@@ -41,7 +40,7 @@ export default function CentralPerkMemory() {
     const handleSubmit = () => {
         if (JSON.stringify(input) === JSON.stringify(commands)) {
             setScore(score + 1);
-            setDifficulty(Math.min(difficulty + 1, 7)); // Increase difficulty up to 7
+            setDifficulty(Math.min(difficulty + 1, 7)); //
             startNewRound();
         } else {
             setGameOver(true);
@@ -53,7 +52,7 @@ export default function CentralPerkMemory() {
     };
 
     const handleStartGame = () => {
-        setShowRules(false); // Hide rules when game starts
+        setShowRules(false);
         startNewRound();
     };
 
