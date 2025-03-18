@@ -41,7 +41,7 @@ export default function CharactersScroll() {
 
         // Afficher les aliments un par un
         setFoodItems([
-            { id: 1, name: "🍕", x: Math.random() * 200, y: Math.random() * 80, moving: false },
+            { id: 1, name: "🍕", x: Math.random() * 300, y: Math.random() * 100, moving: false },
             { id: 2, name: "🍔", x: Math.random() * 150, y: Math.random() * 80, moving: false },
             { id: 3, name: "🍟", x: Math.random() * 200, y: Math.random() * 80, moving: false },
             { id: 4, name: "🥗", x: Math.random() * 150, y: Math.random() * 80, moving: false },
@@ -218,7 +218,7 @@ export default function CharactersScroll() {
                                 key={item.id}
                                 className="food-item"
                                 style={{ top: `${item.y}%`, left: `${item.x}%` }}
-                                initial={{ opacity: 0, scale: 0.4 }}
+                                initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{
                                     opacity: 1,
                                     scale: item.shrinking ? 0.1 : 1, // Rétrécissement avant de disparaître
@@ -396,9 +396,10 @@ export default function CharactersScroll() {
                     >
                         <h2 className="character-quote" style={{ color: `rgb(250, 188, 22)` }}>Could you BE any more...?</h2>
                         <p className="character-text">
-                            Chandler Bing est connu pour son humour sarcastique et ses blagues légendaires.
-                            Mais surtout, son fauteuil préféré est un endroit sacré... enfin, jusqu'à ce que
-                            le poussin et le canard en prennent possession !
+                            Chandler Bing is famous for his sarcastic humor and legendary jokes. But above all, his beloved chair is a sacred spot... well, until the chick and the duck take over! His wit and unique personality brought so much laughter, and his "Could I BE any more...?" catchphrase will forever be a part of Friends history.
+
+                            Chandler may not be with us anymore, but we’ll always miss him and his hilarious one-liners that kept us laughing through thick and thin. Rest in peace, Chandler Bing, you will always be remembered.
+
                         </p>
                     </motion.div>
                 </div>
@@ -451,7 +452,9 @@ export default function CharactersScroll() {
                     >
                         <h2 className="character-quote" style={{ color: `rgb(2, 178, 231)` }}>Smelly Cat, Smelly Cat...</h2>
                         <p className="character-text">
-                            Phoebe Buffay est l'âme libre et excentrique du groupe. Avec sa guitare et ses chansons iconiques, elle apporte une touche unique et imprévisible. Son humour décalé et son passé mystérieux font d'elle un personnage fascinant.
+                            Phoebe Buffay is the free spirit and quirky soul of the group. With her guitar and iconic songs like "Smelly Cat," she brings a unique and unpredictable touch to everything she does. Her offbeat humor, eccentric personality, and mysterious past make her a truly fascinating character.
+
+                            Phoebe taught us to embrace our weirdness and stay true to ourselves, no matter what others think. Her love for life, her oddball sense of humor, and her heart of gold will always be remembered. Whether she was sharing an absurd story or singing a song with her charmingly off-key voice, Phoebe made us laugh and love life a little more. Miss you, Phoebe – you were truly one of a kind!
                         </p>
                     </motion.div>
                 </div>

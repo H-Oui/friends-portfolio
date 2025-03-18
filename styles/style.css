@@ -16,6 +16,8 @@ body {
     padding: 0;
 }
 
+
+
 /* 🎭 Conteneur Principal */
 .character-container {
     display: flex;
@@ -198,6 +200,13 @@ body {
     font-size: 2rem;
 }
 
+.food-item {
+    position: absolute;
+    font-size: 4rem;
+    transition: transform 0.3s;
+}
+
+
 /* 🎸 Smelly Cat */
 .guitar {
     font-size: 2.5rem;
@@ -326,12 +335,13 @@ body {
     font-size: 32px;
     text-decoration: none;
     font-weight: bold;
+    color : black;
     transition: color 0.3s ease;
 }
 
-.red { color: red; }
-.blue { color: blue; }
-.yellow { color: yellow; }
+.red { color: var(--friends-red);  }
+.blue { color: var(--friends-blue); }
+.yellow { color: var(--friends-yellow); }
 
 
 @media (max-width: 768px) {
@@ -365,3 +375,5 @@ body {
         font-size: 1.2rem;
     }
 }
+
+

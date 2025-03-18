@@ -1,12 +1,96 @@
-.mini-games-page {
-    font-family: 'Friends', sans-serif;
+/* styles/allgames.css */
+:root {
+    --friends-red: rgb(233, 30, 35);
+    --friends-blue: rgb(2, 178, 231);
+    --friends-yellow: rgb(250, 188, 22);
+    --friends-beige: #faf3dd;
+    --friends-light-gray: #f5f5f5;
+    --friends-dark-gray: #333;
+    --friends-warning-red: #d62828;
+    --friends-shadow: rgba(0, 0, 0, 0.2);
+}
+.allgames-page {
+    /* Styles généraux appliqués uniquement à cette page */
+}
+
+.allgames-page {
+    background-color: black;
+    font-family: "Arial", sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.allgames-page .container {
     text-align: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px;
 }
 
-.game-card img {
-    border-radius: 10px;
+.allgames-page h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: var(--friends-yellow);
 }
 
-.play-button:hover {
-    background-color: #e66a00;
+.allgames-page .games-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
+
+.allgames-page .game-card {
+    border-radius: 15px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 10px var(--friends-shadow);
+    transition: transform 0.3s ease;
+    color: white;
+}
+
+.allgames-page .game-card:nth-child(1) { background-color: var(--friends-red); }
+.allgames-page .game-card:nth-child(2) { background-color: var(--friends-blue); }
+.allgames-page .game-card:nth-child(3) { background-color: var(--friends-yellow); }
+.allgames-page .game-card:nth-child(4) { background-color: var(--friends-red); }
+.allgames-page .game-card:nth-child(5) { background-color: var(--friends-yellow); }
+.allgames-page .game-card:nth-child(6) { background-color: var(--friends-blue); }
+.allgames-page .game-card:nth-child(7) { background-color: var(--friends-red); }
+
+
+
+.allgames-page .play-button {
+    background-color: var(--friends-warning-red);
+    color: white;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.allgames-page .play-button:hover {
+    background-color: var(--friends-red);
+}
+
+.allgames-page .game-card:hover {
+    transform: scale(1.05);
+}
+
+.allgames-page .game-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.allgames-page .game-card p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
