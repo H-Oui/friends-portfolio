@@ -3,6 +3,7 @@ import Scene3D from "../components/CentralPerk";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
+
 export default function IndexPage() {
     const router = useRouter();
     const [isBlinking, setIsBlinking] = useState(true);
@@ -16,6 +17,7 @@ export default function IndexPage() {
 
     return (
         <div style={styles.container}>
+
             <div style={styles.sceneWrapper}>
                 <Scene3D />
             </div>
@@ -25,6 +27,9 @@ export default function IndexPage() {
             >
                 Welcome to the <span style={styles.friendsFont}>F.R.I.E.N.D.S</span> experience
             </h1>
+            <p style={styles.soundText}>
+                Increase your volume for a better experience
+            </p>
         </div>
     );
 }
@@ -58,5 +63,11 @@ const styles = {
     },
     friendsFont: {
         fontFamily: "'Gabriel Weiss' Friends', sans-serif",
+    },
+    soundText: {
+        color: "#fff",
+        fontSize: "1.2rem",
+        marginTop: "10px",
+        fontStyle: "italic",
     },
 };

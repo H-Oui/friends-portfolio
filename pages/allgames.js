@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import Menu from "../components/menu";
 
+
 const games = [
     { id: "monica", title: "Monica’s Kitchen Rush", description: "Type the dish names before time runs out!", path: "/monicagame" },
     { id: "joey", title: "Joey’s Food Chase", description: "Catch Joey’s food before it disappears!", path: "/joeygame" },
@@ -20,6 +21,7 @@ export default function MiniGamesPage() {
 
     return (
         <div className="allgames-page">
+
             <Menu />
             <div className="container">
                 <h1>Mini-Games Collection</h1>
